@@ -7,7 +7,7 @@ const {
   getBlocks,
   createHash,
 } = require("./chainedBlock");
-
+//
 function initP2PServer() {
   const server = new WebSocket.Server({ port: p2p_port });
   server.on("connection", (ws) => {
