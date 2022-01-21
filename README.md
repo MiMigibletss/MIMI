@@ -25,8 +25,8 @@ p.s. 현재 서버를 닫은 관계로 실행이 되지 않습니다
 
 ![화면 캡처 2021-11-25 194708](https://user-images.githubusercontent.com/88940298/143427874-c9a2c28d-789d-4af2-ab4e-0aece9a16349.png)
 
-한경현(kyunghyun Han):[깃허브](https://github.com/kyunghyunHan)    
-이성재(SeongJae Lee):[깃허브](https://github.com/seongjae-Leee) 
+한경현(kyunghyun Han):[깃허브](https://github.com/kyunghyunHan).     
+이성재(SeongJae Lee):[깃허브](https://github.com/seongjae-Leee).  
 이성현(SeongHyun Lee):[깃허브](https://github.com/coolmarvel)
 
 **기간** :  2021-11-05 ~ 2021-11-22
