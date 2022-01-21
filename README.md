@@ -25,10 +25,9 @@ p.s. 현재 서버를 닫은 관계로 실행이 되지 않습니다
 
 ![화면 캡처 2021-11-25 194708](https://user-images.githubusercontent.com/88940298/143427874-c9a2c28d-789d-4af2-ab4e-0aece9a16349.png)
 
-한경현(kyunghyun Han):[깃허브](https://github.com/kyunghyunHan)SNS Frontend     
-이민주(Minjoo Lee):[깃허브](https://github.com/codecocos)SNS Backend      
-이상민(ssangMin Lee):[깃허브](https://github.com/LeessangMin)Shop Frontend   
-박준혁(jun hyuk Park):[깃허브](https://github.com/berrypjh)Shop Backend  
+한경현(kyunghyun Han):[깃허브](https://github.com/kyunghyunHan)    
+이성재(SeongJae Lee):[깃허브](https://github.com/seongjae-Leee) 
+이성현(SeongHyun Lee):[깃허브](https://github.com/coolmarvel)
 
 **기간** :  2021-11-05 ~ 2021-11-22
 
