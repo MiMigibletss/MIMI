@@ -99,7 +99,7 @@ p.s. 현재 서버를 닫은 관계로 실행이 되지 않습니다
 - 프레임워크 : `NodeJs` `REACT`
 - 프로젝트 관리 Tool : `Google Drive` `GitHub` `notion`
 
-### 🔎  깃 브런치 활용
+### 🔎  깃 브랜치 활용
 
 코드 병합시 오류를 최소화 하기위해 깃브런치 
 
@@ -307,9 +307,8 @@ image의 경우 sns 및 사진첩 에서 동시에 사용하기 때문에 관계
 
 
 
-### 프로젝트 기획안 PPT
-[구글 프레젠테이션 파일](https://docs.google.com/presentation/d/13yVkx7W7bpqiPpieAJCAUgyme5Hsj_4gum353ISTyi4/edit#slide=id.p)   
-[구글 프리젠테이션 파일 기획안 2](https://drive.google.com/file/d/17_Bz_mce2lQwyWdOZ9gFvuxifBwlwVXD/view?usp=sharing)
+### 프로젝트 기획안
+[구글 기확안/회의록 파일](https://drive.google.com/drive/folders/16mA6-jiUT15Sxzz4jaZQ-ap9a9bkzwb2)   
 
 
 
