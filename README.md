@@ -1,4 +1,5 @@
-![143427874-c9a2c28d-789d-4af2-ab4e-0aece9a16349-removebg-preview](https://user-images.githubusercontent.com/88923210/143464419-fc7cb9e8-bb30-40b1-ba0d-c5d776866ada.png)
+![MIMI](https://user-images.githubusercontent.com/88940298/150443569-03c1dfc1-5d17-48bb-8b42-36308d964076.png)
+
 
 # 👨‍❤️‍💋‍👨'Play & Love to Happy in PL2H World!' 
 - 사랑하는 연인과의 행복을 PL2H World에서 마음껏 즐겨보세요!
@@ -23,7 +24,6 @@ p.s. 현재 서버를 닫은 관계로 실행이 되지 않습니다
 
 👨‍👩‍👦‍👦Member.  Pl2h의 팀원들입니다
 
-![화면 캡처 2021-11-25 194708](https://user-images.githubusercontent.com/88940298/143427874-c9a2c28d-789d-4af2-ab4e-0aece9a16349.png)
 
 한경현(kyunghyun Han):[깃허브](https://github.com/kyunghyunHan).     
 이성재(SeongJae Lee):[깃허브](https://github.com/seongjae-Leee).  
