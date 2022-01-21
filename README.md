@@ -141,6 +141,27 @@ module.exports = function(app) {
 프록시 서버를 이용하여 에러를 해결했다.
 
 
+### "./src 디렉토리 밖에서 함수호출"
+
+[상황]  
+![src에러](https://user-images.githubusercontent.com/89625961/150447480-5ae04475-f466-4be7-8b50-f35b1c84ade5.png)
+
+
+[문제] 
+
+React 자체적으로 src 디렉토리 밖에서 이미지든 함수든 모듈을 import 할 때 안되게끔 default 되어있었다.
+
+encryptyion.js에서 getPublicKey(지갑주소)를 받아 와야하는데 axios로 onClick을 통해서는 불러올 수 있지만 그 값 자체를 불러올 수는 없었다.
+
+[해결] 
+
+해결방법은 당연하게도 src 디렉토리 안에 넣으면 해결되는 문제이지만 우리가 이용할 함수가 실행할때마다 출력값이 바뀌는 함수여서,
+
+src로 옮길 시 server 디렉토리 안에 있는 지갑주소와 값이 달라져 또 다른 이슈가 발생하게 된다.
+
+아쉽게도 그 값 자체를 렌더링 할때마다 불러오는 것은 실패하였지만 axios를 통해 값을 불러오는 것으로 아쉽게 마무리하게 되었다.
+
+
 
 ### 프로젝트 기획안
 [구글 기확안/회의록 파일](https://drive.google.com/drive/folders/16mA6-jiUT15Sxzz4jaZQ-ap9a9bkzwb2)   
