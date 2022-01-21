@@ -16,7 +16,7 @@ function isValidBlockStructure(block) {
     typeof block.body === "object"
   );
 }
-
+//11
 function isValidNewBlock(newBlock, previousBlock) {
   if (isValidBlockStructure(newBlock) === false) {
     console.log("유효하지 않은 블록구조입니다.");
