@@ -197,6 +197,7 @@ npm update
 우리 같은 경우는 위와 같은 방법으로 해결이 되었지만, 2가지 방법이 더 있다고 한다.
 
 
+
 1. Rule of Hooks을 break해서 (Stack Overflow에서 제일 첫번쨰 답변)
 
 제안하는 바 :
@@ -211,11 +212,15 @@ npm update
 방법으로 Redux Provider를 Wrap하라고 제안했다.
 
 
+
 2. Duplicated React (나의 경우가 해당)
+
 
 제안하는 바 : 
 
+
 1. npm ls react -> 리액트 버젼 여러개? -> npm update
+
 
 2. npm uninstall 한 후, 다시 install
 
