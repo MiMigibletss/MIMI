@@ -53,6 +53,24 @@ function Port3() {
       .then((req) => alert(req.data));
   };
 
+  const getpeers = async () => {
+    axios.get(`http://localhost:3003/peers`).then((req) => setPeers(req.data));
+  };
+  if (peers.length === 0) {
+    return setPeers(`연결된 피어가없어요`);
+  }
+
+  const addPeers = async () => {
+    const P = peer;
+    if (P.length === 0) {
+      return alert(`peer내용을 넣어주세용`);
+    }
+    await axios
+      .post(`http://localhost:3003/addPeers`, {
+        peers: [`ws://localhost:${P}`],
+      })
+      .then((req) => alert(req.data));
+  };
 
   const toggleComment = (blockchain) => {
     console.log([blockchain.header.index]);
