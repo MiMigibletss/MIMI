@@ -3,8 +3,8 @@ const merkle = require("merkle");
 const cryptojs = require("crypto-js");
 const { BlcokChainDB, CoinDB } = require("./models");
 const random = require("random");
-
-// 트랜잭션 싯발
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const {
   getTransactionPool,
   addToTransactionPool,
@@ -30,44 +30,8 @@ const genesisTransaction = {
       + 50))
     .toString()
 };
-
-const generateNextBlock = () => {
-  const coinbaseTx = getCoinbaseTransaction(getPublicKeyFromWallet(), getLastBlock().index + 1);
-  console.log("coinbaseTx ======= \n", coinbaseTx)
-  const blockData = [coinbaseTx].concat(getTransactionPool());
-  console.log("blockData ======= \n", blockData)
-  return nextBlock(blockData);
-};
-
-let unspentTxOuts = processTransactions(Blocks[0].body, [], 0);
-const getUnspentTxOuts = () => _.cloneDeep(unspentTxOuts);
-
-//===================================
-const sendTransaction = (address, amount) => {
-  const tx = createTransaction(address, amount, getPrivateKeyFromWallet(), getUnspentTxOuts(), getTransactionPool());
-  console.log("getUnspentTxOuts \n", getUnspentTxOuts());
-  addToTransactionPool(tx, getUnspentTxOuts());
-  // p2p_1.broadCastTransactionPool();
-  return tx;
-};
-
-const generatenextBlockWithTransaction = (receiverAddress, amount) => {
-  console.log("어마운트", typeof amount)
-  if (!isValidAddress(receiverAddress)) {
-    throw Error('invalid address');
-  }
-  if (typeof amount !== 'number') {
-    throw Error('invalid amount');
-  }
-  // coinbase transaction 생성 (퍼블릭키, 마지막블록의 index + 1)
-  const coinbaseTx = getCoinbaseTransaction(getPublicKeyFromWallet(), getLastBlock().index + 1);
-  const tx = createTransaction(receiverAddress, amount, getPrivateKeyFromWallet(), getUnspentTxOuts(), getTransactionPool());
-  const blockData = [coinbaseTx, tx];
-  return nextBlock(blockData);
-};
-
-// 트랜잭션 싯발
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Block {
   constructor(header, body) {
     this.header = header;
@@ -200,6 +164,8 @@ function nextBlock(bodyData) {
     difficulty,
     hash
   );
+
+  // 여기에 코인베이스 트랜잭션, 이 트랜젝션의 리워드를 노드에 전달하기
   return new Block(header, bodyData);
 }
 
@@ -439,6 +405,45 @@ function dbBlockCheck(DBBC) {
     Blocks = bc;
   }
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const generateNextBlock = () => {
+  const coinbaseTx = getCoinbaseTransaction(getPublicKeyFromWallet(), getLastBlock().index + 1);
+  console.log("coinbaseTx ======= \n", coinbaseTx);
+  const blockData = [coinbaseTx].concat(getTransactionPool());
+  console.log("blockData ======= \n", blockData);
+  return nextBlock(blockData);
+};
+
+let unspentTxOuts = processTransactions(Blocks[0].body, [], 0);
+const getUnspentTxOuts = () => _.cloneDeep(unspentTxOuts);
+
+//===================================
+const sendTransaction = (address, amount) => {
+  const tx = createTransaction(address, amount, getPrivateKeyFromWallet(), getUnspentTxOuts(), getTransactionPool());
+  console.log("getUnspentTxOuts \n", getUnspentTxOuts());
+  addToTransactionPool(tx, getUnspentTxOuts());
+  // p2p_1.broadCastTransactionPool();
+  return tx;
+};
+
+const generatenextBlockWithTransaction = (receiverAddress, amount) => {
+  console.log("어마운트", typeof amount);
+  if (!isValidAddress(receiverAddress)) {
+    throw Error('invalid address');
+  }
+  if (typeof amount !== 'number') {
+    throw Error('invalid amount');
+  }
+  // coinbase transaction 생성 (퍼블릭키, 마지막블록의 index + 1)
+  const coinbaseTx = getCoinbaseTransaction(getPublicKeyFromWallet(), getLastBlock().index + 1);
+  const tx = createTransaction(receiverAddress, amount, getPrivateKeyFromWallet(), getUnspentTxOuts(), getTransactionPool());
+  const blockData = [coinbaseTx, tx];
+  return nextBlock(blockData);
+};
+
 
 module.exports = {
   Block,
