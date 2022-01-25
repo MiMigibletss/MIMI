@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { Row, Col, Card, Input } from "antd";

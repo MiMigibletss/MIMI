@@ -44,7 +44,7 @@ function Port1() {
     // console.log(Wallet);
   };
   const stop = async () => {
-    await axiosq
+    await axios
       .post(`http://localhost:3001/stop`)
       .then((req) => alert(req.data));
   };
