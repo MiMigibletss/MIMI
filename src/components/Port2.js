@@ -10,6 +10,7 @@ function Port2() {
   const [peers, setPeers] = useState(" ");
   const [Wallet, setWallet] = useState([]);
   const [chainBlocks, setChainBlocks] = useState([]);
+  const [coinBlocks, setCoinBlocks] = useState([]);
   const reverse = [...chainBlocks].reverse();
 
   const [count, setCount] = useState(0);
@@ -84,8 +85,7 @@ function Port2() {
 
   return (
     <div style={{ background: 'white' }}>
-      <br />
-      <Button color="error" style={{ marginTop: 5 }} variant="contained" type="dash" onClick={address}>
+      <Button color="error" style={{ marginTop: 5 }} variant="contained" type="dash" onClick={() => { address(); coinadd(); }}>
         지갑
       </Button>
       <br />
@@ -94,27 +94,8 @@ function Port2() {
         <div className="wallet_bublic_key_div-title">
         </div>
         <div className="wallet_bublic_key_div-content">{Wallet}</div>
+        <div>코인:{coinBlocks}MIMI</div>
       </div>
-      <hr className="boundary_line"></hr>
-      <Input
-        placeholder="연결할 노드 번호를 적으시오"
-        onChange={(e) => {
-          setPeer(e.target.value);
-        }}
-        value={peer}
-      />
-      <ButtonGroup disableElevation color="error" variant="contained" size="medium">
-        <Button style={{ marginTop: 5 }} type="dash" onClick={addPeers}>
-          피어 연결
-        </Button>
-        <Button style={{ marginTop: 5 }} color="warning" variant="outlined" type="dash" onClick={getpeers}>
-          피어 연결목록 확인
-        </Button>
-      </ButtonGroup>
-      <p>
-        {" "}
-        <b style={{ marginLeft: 10 }}></b> {peers}
-      </p>
       <hr className="boundary_line"></hr>
       <Input
         placeholder="body에 들어갈 data를 입력하시오"
@@ -216,6 +197,7 @@ function Port2() {
           </ul>
         );
       })}
+
     </div>
   );
 }
