@@ -52,7 +52,6 @@ function Port2() {
       .then((req) => alert(req.data));
   };
 
-  const [shownBlock, setshownBlock] = useState({});
 
   const toggleComment = (blockchain) => {
     console.log([blockchain.header.index]);
