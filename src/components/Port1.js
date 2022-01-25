@@ -17,7 +17,7 @@ function Port1() {
   const [delay, setDelay] = useState(1000);
   const [isRunning, setIsRunning] = useState(false);
   const [ok, setOk] = useState(false);
-
+  const [shownBlock, setshownBlock] = useState({});
 
   const bcMaker = async () => {
     const data = blockData;
@@ -53,7 +53,6 @@ function Port1() {
       .then((req) => alert(req.data));
   };
 
-  const [shownBlock, setshownBlock] = useState({});
 
   const toggleComment = (blockchain) => {
     console.log([blockchain.header.index]);
@@ -221,6 +220,3 @@ function useInterval(callback, delay) {
 }
 
 export default Port1;
-
-
-
