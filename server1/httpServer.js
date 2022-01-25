@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-expressions */
 const http_port = process.env.HTTP_PORT || 3001;
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -73,7 +75,7 @@ function initHttpServer() {
   app.get("/1", async (req, res) => {
     // BlcokChainDB.destroy({ where: {}, truncate: true });
     await CoinDB.findOne({
-      where:{Coin:50}
+      where: { Coin: 50 }
     })
       .then((bc) => {
         res.send(bc);

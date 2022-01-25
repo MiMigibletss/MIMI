@@ -4,6 +4,70 @@ const cryptojs = require("crypto-js");
 const { BlcokChainDB, CoinDB } = require("./models");
 const random = require("random");
 
+// 트랜잭션 싯발
+const {
+  getTransactionPool,
+  addToTransactionPool,
+  updateTransactionPool,
+} = require('./transactionPool');
+
+const {
+  processTransactions,
+  getCoinbaseTransaction,
+  isValidAddress,
+  getTransactionId
+} = require('./transaction');
+
+const genesisTransaction = {
+  'txIns': [{ 'signature': '', 'txOutId': '0420f4cd8e1238a2765bf4eea151ece7d13b809581dc050e500d1d4a0eb835aa45a184f71645a225304b5f5186ed69b938485449f7fca1ab1f03c073127b8bdf36', 'txOutIndex': 0 }],
+  'txOuts': [{
+    'address': '0420f4cd8e1238a2765bf4eea151ece7d13b809581dc050e500d1d4a0eb835aa45a184f71645a225304b5f5186ed69b938485449f7fca1ab1f03c073127b8bdf36',
+    'amount': 50
+  }],
+  'id': cryptojs.SHA256(('0420f4cd8e1238a2765bf4eea151ece7d13b809581dc050e500d1d4a0eb835aa45a184f71645a225304b5f5186ed69b938485449f7fca1ab1f03c073127b8bdf36'
+    + 0)
+    + ('0420f4cd8e1238a2765bf4eea151ece7d13b809581dc050e500d1d4a0eb835aa45a184f71645a225304b5f5186ed69b938485449f7fca1ab1f03c073127b8bdf36'
+      + 50))
+    .toString()
+};
+
+const generateNextBlock = () => {
+  const coinbaseTx = getCoinbaseTransaction(getPublicKeyFromWallet(), getLastBlock().index + 1);
+  console.log("coinbaseTx ======= \n", coinbaseTx)
+  const blockData = [coinbaseTx].concat(getTransactionPool());
+  console.log("blockData ======= \n", blockData)
+  return nextBlock(blockData);
+};
+
+let unspentTxOuts = processTransactions(Blocks[0].body, [], 0);
+const getUnspentTxOuts = () => _.cloneDeep(unspentTxOuts);
+
+//===================================
+const sendTransaction = (address, amount) => {
+  const tx = createTransaction(address, amount, getPrivateKeyFromWallet(), getUnspentTxOuts(), getTransactionPool());
+  console.log("getUnspentTxOuts \n", getUnspentTxOuts());
+  addToTransactionPool(tx, getUnspentTxOuts());
+  // p2p_1.broadCastTransactionPool();
+  return tx;
+};
+
+const generatenextBlockWithTransaction = (receiverAddress, amount) => {
+  console.log("어마운트", typeof amount)
+  if (!isValidAddress(receiverAddress)) {
+    throw Error('invalid address');
+  }
+  if (typeof amount !== 'number') {
+    throw Error('invalid amount');
+  }
+  // coinbase transaction 생성 (퍼블릭키, 마지막블록의 index + 1)
+  const coinbaseTx = getCoinbaseTransaction(getPublicKeyFromWallet(), getLastBlock().index + 1);
+  const tx = createTransaction(receiverAddress, amount, getPrivateKeyFromWallet(), getUnspentTxOuts(), getTransactionPool());
+  const blockData = [coinbaseTx, tx];
+  return nextBlock(blockData);
+};
+
+// 트랜잭션 싯발
+
 class Block {
   constructor(header, body) {
     this.header = header;
@@ -43,7 +107,8 @@ function creatGenesisBlock() {
   const previousHash = "0".repeat(64);
   const timestamp = 1231006505;
   const body = [
-    "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks",
+    // "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks",
+    genesisTransaction
   ];
   const hash = findBlock();
   const tree = merkle("sha256").sync(body);
@@ -390,4 +455,7 @@ module.exports = {
   addBlock,
   getVersion,
   creatGenesisBlock,
+  sendTransaction,
+  generateNextBlock,
+  generatenextBlockWithTransaction
 };
