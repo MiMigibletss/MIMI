@@ -13,12 +13,16 @@ function Port1() {
   const [coinBlocks, setCoinBlocks] = useState([]);
   const reverse = [...chainBlocks].reverse();
 
+  const [count, setCount] = useState(0);
+  const [delay, setDelay] = useState(1000);
+  const [isRunning, setIsRunning] = useState(false);
+  const [ok, setOk] = useState(false);
 
 
   const bcMaker = async () => {
     const data = blockData;
     if (data.length === 0) {
-      return alert(`데이터를 넣어주세용`);
+      return alert(`데이터 필수`);
     }
     await axios
       .post(`http://localhost:3001/mineBlock`, { data: [data] })
@@ -44,7 +48,7 @@ function Port1() {
     // console.log(Wallet);
   };
   const stop = async () => {
-    await axiosq
+    await axios
       .post(`http://localhost:3001/stop`)
       .then((req) => alert(req.data));
   };
@@ -59,10 +63,6 @@ function Port1() {
     }));
   };
 
-  const [count, setCount] = useState(0);
-  const [delay, setDelay] = useState(1000);
-  const [isRunning, setIsRunning] = useState(false);
-  const [ok, setOk] = useState(false);
 
   useInterval(
     () => {

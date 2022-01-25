@@ -13,10 +13,16 @@ function Port3() {
   const [chainBlocks, setChainBlocks] = useState([]);
   const reverse = [...chainBlocks].reverse();
 
+  const [count, setCount] = useState(0);
+  const [delay, setDelay] = useState(1000);
+  const [isRunning, setIsRunning] = useState(false);
+  const [ok, setOk] = useState(false);
+  const [shownBlock, setshownBlock] = useState({});
+
   const bcMaker = async () => {
     const data = blockData;
     if (data.length === 0) {
-      return alert(`데이터를 넣어주세용`);
+      return alert(`데이터 필수`);
     }
     await axios
       .post(`http://localhost:3003/mineBlock`, { data: [data] })
@@ -28,12 +34,18 @@ function Port3() {
       .get(`http://localhost:3003/Blocks`)
       .then((req) => setChainBlocks(req.data));
   };
+  const coinadd = async () => {
+    await axios
+      .get(`http://localhost:3003/1`)
+      .then((req) => setCoinBlocks(req.data.Coin));
+    console.log(coinBlocks);
+  };
 
   const address = async () => {
     await axios
       .get(`http://localhost:3003/address`)
       .then((req) => setWallet(req.data.address));
-    console.log(Wallet);
+    // console.log(Wallet);
   };
   const stop = async () => {
     await axios
@@ -41,24 +53,6 @@ function Port3() {
       .then((req) => alert(req.data));
   };
 
-  const getpeers = async () => {
-    axios.get(`http://localhost:3003/peers`).then((req) => setPeers(req.data));
-  };
-  if (peers.length === 0) {
-    return setPeers(`연결된 피어가없어요`);
-  }
-
-  const addPeers = async () => {
-    const P = peer;
-    if (P.length === 0) {
-      return alert(`peer내용을 넣어주세용`);
-    }
-    await axios
-      .post(`http://localhost:3003/addPeers`, {
-        peers: [`ws://localhost:${P}`],
-      })
-      .then((req) => alert(req.data));
-  };
   const [shownBlock, setshownBlock] = useState({});
 
   const toggleComment = (blockchain) => {
@@ -69,10 +63,6 @@ function Port3() {
     }));
   };
 
-  const [count, setCount] = useState(0);
-  const [delay, setDelay] = useState(1000);
-  const [isRunning, setIsRunning] = useState(false);
-  const [ok, setOk] = useState(false);
 
   useInterval(
     () => {
