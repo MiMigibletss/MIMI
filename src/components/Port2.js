@@ -10,19 +10,37 @@ function Port2() {
   const [peers, setPeers] = useState(" ");
   const [Wallet, setWallet] = useState([]);
   const [chainBlocks, setChainBlocks] = useState([]);
-  const [coinBlocks, setCoinBlocks] = useState([]);
   const reverse = [...chainBlocks].reverse();
-
+  const [shownBlock, setshownBlock] = useState({});
   const [count, setCount] = useState(0);
   const [delay, setDelay] = useState(1000);
   const [isRunning, setIsRunning] = useState(false);
   const [ok, setOk] = useState(false);
-  const [shownBlock, setshownBlock] = useState({});
+  const [writeAddress, setWriteAddress] = useState("");
+  const [sendAmount, setSendAmount] = useState("");
+  const [coinBlocks, setCoinBlocks] = useState([]);
+
+
+  useInterval(
+    () => {
+      const data = blockData || "화이팅";
+      setIsRunning(false);
+      axios
+        .post(`http://localhost:3002/mineBlock`, { data: [data] })
+        .then((req) => {
+          console.log(req.data);
+          setIsRunning(true);
+        });
+
+      setCount(count + 1);
+    },
+    isRunning && ok ? delay : null
+  );
 
   const bcMaker = async () => {
     const data = blockData;
     if (data.length === 0) {
-      return alert(`데이터 필수`);
+      return alert(`데이터를 넣어주세용`);
     }
     await axios
       .post(`http://localhost:3002/mineBlock`, { data: [data] })
@@ -34,18 +52,12 @@ function Port2() {
       .get(`http://localhost:3002/Blocks`)
       .then((req) => setChainBlocks(req.data));
   };
-  const coinadd = async () => {
-    await axios
-      .get(`http://localhost:3002/1`)
-      .then((req) => setCoinBlocks(req.data.Coin));
-    console.log(coinBlocks);
-  };
 
   const address = async () => {
     await axios
       .get(`http://localhost:3002/address`)
       .then((req) => setWallet(req.data.address));
-    // console.log(Wallet);
+    console.log(Wallet);
   };
   const stop = async () => {
     await axios
@@ -81,21 +93,14 @@ function Port2() {
   };
 
 
-  useInterval(
-    () => {
-      const data = blockData || "화이팅";
-      setIsRunning(false);
-      axios
-        .post(`http://localhost:3002/mineBlock`, { data: [data] })
-        .then((req) => {
-          console.log(req.data);
-          setIsRunning(true);
-        });
+  function handleWriteAddress(e) {
+    setWriteAddress(e.target.value);
+  }
+  function handleSendAmount(e) {
+    setSendAmount(e.target.value);
+  }
 
-      setCount(count + 1);
-    },
-    isRunning && ok ? delay : null
-  );
+
 
   function handleDelayChange(e) {
     setDelay(Number(e.target.value));
@@ -103,8 +108,9 @@ function Port2() {
 
   return (
     <div style={{ background: 'white' }}>
-      <Button color="error" style={{ marginTop: 5 }} variant="contained" type="dash" onClick={() => { address(); coinadd(); }}>
-        지갑
+      <br />
+      <Button color="error" style={{ marginTop: 5 }} variant="contained" type="dash" onClick={address}>
+        지갑(publicKey)
       </Button>
       <br />
 
@@ -114,7 +120,48 @@ function Port2() {
         <div className="wallet_bublic_key_div-content">{Wallet}</div>
         <div>코인:{coinBlocks}MIMI</div>
       </div>
-      <hr className="boundary_line"></hr>
+      <br />
+      <br />
+      <Input
+        placeholder="연결할 노드 번호를 적으세요"
+        onChange={(e) => {
+          setPeer(e.target.value);
+        }}
+        value={peer}
+      />
+      <ButtonGroup disableElevation color="error" variant="contained" size="medium">
+        <Button style={{ marginTop: 5 }} type="dash" onClick={addPeers}>
+          피어 연결
+        </Button>
+        <Button style={{ marginTop: 5 }} color="warning" variant="outlined" type="dash" onClick={getpeers}>
+          피어 연결목록 확인
+        </Button>
+      </ButtonGroup>
+      <p>
+        {" "}
+        <b style={{ marginLeft: 10 }}></b> {peers}
+      </p>
+      <br />
+      <Input
+        placeholder="보낼 지갑 주소를 적으세요"
+        onChange={(e) => {
+          handleWriteAddress(e.target.value);
+        }}
+        value={writeAddress}
+      />
+      <Input
+        placeholder="보낼 코인의 양을 적으세요"
+        onChange={(e) => {
+          handleSendAmount(e.target.value);
+        }}
+        value={sendAmount}
+      />
+      <Button color="error" style={{ marginTop: 5 }} variant="contained" type="dash" onClick={console.log('보내기함수')}>
+        보내기
+      </Button>
+      <br />
+      <br />
+      <br />
       <Input
         placeholder="body에 들어갈 data를 입력하시오"
         type="text"
@@ -215,7 +262,6 @@ function Port2() {
           </ul>
         );
       })}
-
     </div>
   );
 }
