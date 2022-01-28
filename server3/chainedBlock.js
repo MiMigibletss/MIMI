@@ -4,6 +4,13 @@ const cryptojs = require("crypto-js");
 const { BlcokChainDB } = require("./models");
 const random = require("random");
 
+const { getTransactionPool, addToTransactionPool, updateTransactionPool, } = require('./transactionPool');
+
+const { processTransactions, getCoinbaseTransaction, isValidAddress, getTransactionId } = require('./transaction');
+
+const { getPublicKeyFromWallet, getPrivateKeyFromWallet, createTransaction } = require('./wallet')
+
+
 class Block {
   constructor(header, body) {
     this.header = header;
@@ -32,6 +39,20 @@ class BlockHeader {
     this.hash = hash;
   }
 }
+
+const genesisTransaction = {
+  'txIns': [{ 'signature': '', 'txOutId': '045b097c35d2b38c3b3bf038c19da260334a1c3303e97ad69a317a198947580485e4f626095b146781b8b9593fb4446f1e5e3b1bcce5a3076302ebe1bea00b85ee', 'txOutIndex': 0 }],
+  'txOuts': [{
+    'address': '045b097c35d2b38c3b3bf038c19da260334a1c3303e97ad69a317a198947580485e4f626095b146781b8b9593fb4446f1e5e3b1bcce5a3076302ebe1bea00b85ee',
+    'amount': 50
+  }],
+  'id': cryptojs.SHA256(('045b097c35d2b38c3b3bf038c19da260334a1c3303e97ad69a317a198947580485e4f626095b146781b8b9593fb4446f1e5e3b1bcce5a3076302ebe1bea00b85ee'
+    + 0)
+    + ('045b097c35d2b38c3b3bf038c19da260334a1c3303e97ad69a317a198947580485e4f626095b146781b8b9593fb4446f1e5e3b1bcce5a3076302ebe1bea00b85ee'
+      + 50))
+    .toString()
+};
+
 function getVersion() {
   const package = fs.readFileSync("package.json");
   return JSON.parse(package).version;
@@ -43,7 +64,8 @@ function creatGenesisBlock() {
   const previousHash = "0".repeat(64);
   const timestamp = 1231006505;
   const body = [
-    "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks",
+    // "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks",
+    genesisTransaction
   ];
   const hash = findBlock();
   const tree = merkle("sha256").sync(body);

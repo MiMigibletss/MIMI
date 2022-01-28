@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 const http_port = process.env.HTTP_PORT || 3003;
 const express = require("express");
 const cors = require("cors");
