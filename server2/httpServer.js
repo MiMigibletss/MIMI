@@ -11,6 +11,7 @@ const {
   dbBlockCheck,
   addBlock,
 } = require("./chainedBlock");
+const blockchain = require('./chainedBlock')
 const { getSockets, initConnection } = require("./p2pServer");
 const { getPublicKeyFromWallet, initWallet } = require("./encryption");
 
