@@ -156,9 +156,15 @@ function Port2() {
         }}
         value={sendAmount}
       />
-      <Button color="error" style={{ marginTop: 5 }} variant="contained" type="dash" onClick={console.log('보내기함수')}>
-        보내기
-      </Button>
+      <ButtonGroup disableElevation color="error" variant="contained" size="medium">
+        <Button color="error" style={{ marginTop: 5 }} variant="contained" type="dash" onClick={console.log('보내기함수')}>
+          코인 보내기
+        </Button>
+        <Button style={{ marginTop: 5 }} color="warning" variant="outlined" type="dash" onClick={console.log('트랜젝션 내역 보기')}>
+          트랜젝션 내역
+        </Button>
+      </ButtonGroup>
+
       <br />
       <br />
       <br />
