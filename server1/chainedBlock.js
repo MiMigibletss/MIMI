@@ -267,7 +267,6 @@ async function replaceChain(newBlocks) {
       newBlocks.length > Blocks.length ||
       (newBlocks.length === Blocks.length && random.boolean())
     ) {
-      console.log(`블록을 새블록으로 교체.`);
       Blocks = newBlocks;
       const nw = require("./p2pServer");
       nw.broadcast(nw.responseLatestMsg());
@@ -277,8 +276,6 @@ async function replaceChain(newBlocks) {
         await BlcokChainDB.create({ BlockChain: newBlocks[i] });
       }
     }
-  } else {
-    console.log("받은 블록에 문제 있음");
   }
 }
 
@@ -351,14 +348,7 @@ function dbBlockCheck(DBBC) {
   const latesMyBlock = getLastBlock();
 
   if (DBBlock.header.index < latesMyBlock.header.index) {
-    console.log(
-      "DB 시작전  \n" +
-      `DB 블록의 index 값 ${DBBlock.header.index}\n` +
-      `현재 보유중인 index값 ${latesMyBlock.header.index}\n`
-    );
-
     if (createHash(DBBlock) === latesMyBlock.header.previousHash) {
-      console.log(`DB에 다음 블록 추가`);
       BlcokChainDB.create({
         BlockChain: latesMyBlock,
       }).catch((err) => {
@@ -366,11 +356,9 @@ function dbBlockCheck(DBBC) {
         throw err;
       });
     } else {
-      console.log(`DB 초기화중`);
       replaceChain(getBlocks());
     }
   } else {
-    console.log("DB 초기화 완료");
     Blocks = bc;
   }
 }

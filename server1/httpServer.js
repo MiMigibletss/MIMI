@@ -71,9 +71,8 @@ function initHttpServer() {
       });
   });
   app.get("/1", async (req, res) => {
-    // BlcokChainDB.destroy({ where: {}, truncate: true });
     await CoinDB.findOne({
-      where:{Coin:50}
+      where: { Coin: 50 }
     })
       .then((bc) => {
         res.send(bc);
@@ -124,7 +123,7 @@ function initHttpServer() {
     if (address != "") {
       res.send({ address: address });
     } else {
-      res.send("Address가 없습니다.");
+      res.send("주소가 없습니다.");
     }
   });
 
@@ -139,7 +138,7 @@ function initHttpServer() {
       });
 
       res.status(201).json({ success: true, fulljam });
-      console.log(success, "fdwcfwfwc");
+      console.log(success);
     } catch (error) {
       console.error(error);
       return res.status(400).send(error);

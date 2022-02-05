@@ -1,6 +1,4 @@
-//시퀄라이즈  기본 연결 
-
-const Sequelize = require("sequelize");     //시퀄라이즈 
+const Sequelize = require("sequelize");
 const env = process.env.NODE_ENV || "development";
 const config = require("../../config/config.json")[env];
 
