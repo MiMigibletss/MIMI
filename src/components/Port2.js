@@ -9,9 +9,13 @@ function Port2() {
   const [peer, setPeer] = useState("");
   const [peers, setPeers] = useState(" ");
   const [Wallet, setWallet] = useState([]);
+  const [Money, setMoney] = useState(0);
+  const [MoneyToAddress, setMoneyToAddress] = useState("");
+  const [Balance, setBalance] = useState([]); // 지갑 잔액
   const [chainBlocks, setChainBlocks] = useState([]);
   const reverse = [...chainBlocks].reverse();
   const [shownBlock, setshownBlock] = useState({});
+  const [shownTx, setShownTx] = useState({});
   const [count, setCount] = useState(0);
   const [delay, setDelay] = useState(1000);
   const [isRunning, setIsRunning] = useState(false);
@@ -19,7 +23,12 @@ function Port2() {
   const [writeAddress, setWriteAddress] = useState("");
   const [sendAmount, setSendAmount] = useState("");
   const [coinBlocks, setCoinBlocks] = useState([]);
+  const [transactionPool, setTransactionPool] = useState("");
 
+
+  useEffect(() => {
+    getTransactionPool();
+  }, [transactionPool]);
 
   useInterval(
     () => {
@@ -45,6 +54,46 @@ function Port2() {
     await axios
       .post(`http://localhost:3002/mineBlock`, { data: [data] })
       .then((req) => alert(req.data));
+  };
+
+  // 지갑 공개키 받아오기
+  const getAddress = async () => {
+    await axios
+      .get(`http://localhost:3002/address`)
+      .then((res) => setWallet(res.data.address));
+  };
+
+  // 지갑 잔액 조회
+  const getBalance = async () => {
+    await axios
+      .get(`http://localhost:3002/balance`)
+      .then((res) => setBalance(res.data.balance));
+  };
+
+  // 트랜잭션 만들기
+  const sendTransaction = async () => {
+    if (Money <= 0) {
+      alert("금액 다시 적으세요.");
+    } else if (MoneyToAddress.length !== 130) {
+      alert("해당 주소가 없습니다. 다시 시도해 주세요.");
+    } else {
+      await axios
+        .post(`http://localhost:3002/sendTransaction`, {
+          address: MoneyToAddress,
+          amount: Money,
+        })
+        .then((res) => {
+          console.log(res.data);
+          alert("트랜잭션 완료.");
+        });
+    }
+  };
+
+  // 트랜잭션풀 불러오기
+  const getTransactionPool = async () => {
+    await axios
+      .get(`http://localhost:3002/transactionPool`)
+      .then((res) => setTransactionPool(res.data));
   };
 
   const connect = async () => {
@@ -143,26 +192,33 @@ function Port2() {
       </p>
       <br />
       <Input
+        type="number"
         placeholder="보낼 지갑 주소를 적으세요"
         onChange={(e) => {
-          handleWriteAddress(e.target.value);
+          setMoneyToAddress(e.target.value);
         }}
-        value={writeAddress}
+        value={Money}
       />
       <Input
+        type="text"
         placeholder="보낼 코인의 양을 적으세요"
         onChange={(e) => {
-          handleSendAmount(e.target.value);
+          setMoneyToAddress(e.target.value);
         }}
-        value={sendAmount}
+        value={MoneyToAddress}
       />
       <ButtonGroup disableElevation color="error" variant="contained" size="medium">
-        <Button color="error" style={{ marginTop: 5 }} variant="contained" type="dash" onClick={console.log('보내기함수')}>
+        <Button color="error" style={{ marginTop: 5 }} variant="contained" type="dash" onClick={sendTransaction}>
           코인 보내기
         </Button>
-        <Button style={{ marginTop: 5 }} color="warning" variant="outlined" type="dash" onClick={console.log('트랜젝션 내역 보기')}>
+        <Button style={{ marginTop: 5 }} color="warning" variant="outlined" type="dash" onClick={console.log(transactionPool.length)}>
           트랜젝션 내역
         </Button>
+        {/* {transactionPool
+          ? transactionPool.map((txPool) => {
+              return <div className="pool_box-effect">⁽⁽◝(˙꒳˙)◜⁾⁾</div>;
+            })
+          : null} */}
       </ButtonGroup>
 
       <br />
