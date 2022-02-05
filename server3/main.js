@@ -8,8 +8,8 @@ const TX = require("./transaction");
 const TP = require("./transactionPool");
 const WALLET = require("./wallet");
 
-const httpPort = process.env.HTTP_PORT || 3003;
-const p2pPort = process.env.P2P_PORT || 6003;
+const httpPort = parseInt(process.env.HTTP_PORT) || 3003;
+const p2pPort = parseInt(process.env.P2P_PORT) || 6003;
 
 const initHttpServer = (httpPort) => {
   const app = express();
