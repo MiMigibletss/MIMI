@@ -8,10 +8,10 @@ const TX = require("./transaction");
 const TP = require("./transactionPool");
 const WALLET = require("./wallet");
 
-const httpPort = parseInt(process.env.HTTP_PORT) || 3003;
-const p2pPort = parseInt(process.env.P2P_PORT) || 6003;
+const httpPort = process.env.HTTP_PORT || 3003;
+const p2pPort = process.env.P2P_PORT || 6003;
 
-const initHttpServer = (myHttpPort) => {
+const initHttpServer = (httpPort) => {
   const app = express();
   app.use(cors());
   app.use(bodyParser.json());
@@ -72,7 +72,7 @@ const initHttpServer = (myHttpPort) => {
   app.post("/mineBlock", (req, res) => {
     const newBlock = BC.generateNextBlock();
     if (newBlock === null) {
-      res.status(400).send("채굴이 안돼요");
+      res.status(400).send("can't mine");
     } else {
       res.send(newBlock);
     }
@@ -137,8 +137,8 @@ const initHttpServer = (myHttpPort) => {
     process.exit();
   });
 
-  app.listen(myHttpPort, () => {
-    console.log(myHttpPort + "포트에서 대기중..");
+  app.listen(httpPort, () => {
+    console.log(httpPort + "포트에서 대기중..");
   });
 };
 
