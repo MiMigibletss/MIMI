@@ -1,7 +1,7 @@
 
 const   bodyParser =require('body-parser') ;
 const express  =require('express') ;
-
+const cors = require("cors");
 const {
     Block, generateNextBlock, generatenextBlockWithTransaction, generateRawNextBlock, getAccountBalance,
     getBlockchain, getMyUnspentTransactionOutputs, getUnspentTxOuts, sendTransaction
@@ -18,6 +18,7 @@ const p2pPort = parseInt(process.env.P2P_PORT) || 6002;
 노드 목록을 가져오거나 새로운 노드를 추가하기 curl명령어로도 노드를 제어할 수 있어요. */
 const initHttpServer = (myHttpPort) => {
     const app = express();
+    app.use(cors());
     app.use(bodyParser.json());
     app.use((err, req, res, next) => {
         if (err) {
@@ -25,6 +26,7 @@ const initHttpServer = (myHttpPort) => {
         }
     });
     app.get('/blocks', (req, res) => {
+      console.log(getBlockchain());
         res.send(getBlockchain());
     });
     app.get('/unspentTransactionOutputs', (req, res) => {
@@ -116,9 +118,3 @@ initP2PServer(p2pPort);
 initWallet();
 
 
-
-
-/**
- *  curl http://localhost:3001/blocks 
- * 
- */
