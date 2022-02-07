@@ -5,7 +5,7 @@ const TX = require("./transaction");
 
 const EC = new ecdsa.ec("secp256k1");
 const privateKeyLocation =
-  process.env.PRIVATE_KEY || "miner2/wallet/private_key";
+  process.env.PRIVATE_KEY || "server3/wallet/private_key";
 
 const getPrivateFromWallet = () => {
   const buffer = fs.readFileSync(privateKeyLocation, "utf8");

@@ -19,7 +19,7 @@ const initP2PServer = (p2pPort) => {
   server.on("connection", (ws) => {
     initConnection(ws);
   });
-  console.log(p2p_port + "번 포트 대기중...");
+  console.log(p2pPort + "번 포트 대기중...");
 };
 
 const getSockets = () => sockets;
