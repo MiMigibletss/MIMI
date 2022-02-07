@@ -134,10 +134,10 @@ function Port3() {
   };
 
   const toggleComment = (blockchain) => {
-    console.log([blockchain.header.index]);
+    console.log([blockchain.index]);
     setshownBlock((prevShownComments) => ({
       ...prevShownComments,
-      [blockchain.header.index]: !prevShownComments[blockchain.header.index],
+      [blockchain.index]: !prevShownComments[blockchain.index],
     }));
   };
 
@@ -251,7 +251,7 @@ function Port3() {
       </ButtonGroup>
       {reverse.map((a) => {
         return (
-          <ul key={a.header.index}>
+          <ul key={a.index}>
             <div
               onClick={() => {
                 toggleComment(a);
@@ -269,49 +269,49 @@ function Port3() {
                       <div>
                         <strong>고유 번호</strong>
                       </div>
-                      <div>{a.header.index}  ({a.header.index + 1}번째 블록)</div>
+                      <div>{a.index}  ({a.index + 1}번째 블록)</div>
                     </li>
                     <hr className="boundary_line"></hr>
                     <li>
                       <div>
                         <strong>해시값</strong>
                       </div>
-                      <div>{JSON.stringify(a.header.hash)}</div>
+                      <div>{JSON.stringify(a.hash)}</div>
                     </li>
                     <hr className="boundary_line"></hr>
                     <li>
                       <div>
                         <strong>이전 해시값</strong>
                       </div>
-                      <div>{a.header.previousHash}</div>
+                      <div>{a.previousHash}</div>
                     </li>
                     <hr className="boundary_line"></hr>
                     <li>
                       <div>
                         <strong>블록 생성 시각</strong>
                       </div>
-                      <div>{a.header.timestamp}</div>
+                      <div>{a.timestamp}</div>
                     </li>
                     <hr className="boundary_line"></hr>
                     <li>
                       <div>
                         <strong>머클루트</strong>
                       </div>
-                      <div>{a.header.merkleRoot}</div>
+                      <div>{a.merkleRoot}</div>
                     </li>
                     <hr className="boundary_line"></hr>
                     <li>
                       <div>
                         <strong>난이도</strong>
                       </div>
-                      <div>{a.header.difficulty}</div>
+                      <div>{a.difficulty}</div>
                     </li>
                     <hr className="boundary_line"></hr>
                     <li>
                       <div>
                         <strong>넌스</strong>
                       </div>
-                      <div>{JSON.stringify(a.header.nonce)}</div>
+                      <div>{JSON.stringify(a.nonce)}</div>
                     </li>
                     <hr className="boundary_line"></hr>
                     <li>
